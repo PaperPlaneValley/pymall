@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
+#PyMall:Python语言编写的Python代码商店
+#PaperPlaneValley纸飞机谷工作室
 import os
 import getpass
 import socket
 import sys
-def pmShell(ip):
-    ip=ip.strip('')
-    if ip == 'exit':
-        sys.exit(0)
-    elif ip == 'quit':
-        sys.exit(0)
-    elif ip == 'q':
-        sys.exit(0)
-    else:
-        print("无法理解的 '"+ip+"'")
+
+sys.path.append(r'./functions')
+import analysisip
+import err
+
 def cmdIn():
     who=str(getpass.getuser())
     pwd=str(os.getcwd())
@@ -20,11 +17,21 @@ def cmdIn():
     op=str('PM ['+who+'@'+hn+': '+pwd+' ] >>>')
     ip=str(input(op))
     return ip
-def analysis(ip):
-    ip=ip.strip(' ')
-    if ip.startswith('os') == True:
-        os.system(ip.strip('os '))
-    else:
-        pmShell(ip)
+
+print('\n使用 help 或 h 来查看帮助\n')
+
+ip = str()
+hc = ip
+
 while 1:
-    analysis(cmdIn())
+    hc = ip
+    ip=str(cmdIn())
+    ip = ip.strip(' ')
+    if ip.startswith('$u') == True:
+        analysisip.acmd(hc+ip.strip('$u'))
+    else:
+        op = str(analysisip.acmd(ip))
+        if op == 'ok':
+            pass
+        else:
+            err.err(op,ip)
